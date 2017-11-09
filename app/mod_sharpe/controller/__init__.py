@@ -3,19 +3,18 @@ import json
 from flask import Blueprint, request
 from app import db
 
-#from app.mod_stocks.service import StatisticsService
 from util.sharpe_procedure import find_max_sharpe
 
 mod_sharpe = Blueprint('sharpe', __name__, url_prefix='/sharpe')
 
 
 @mod_sharpe.route('/', methods=['GET', 'POST'])
-def get_index():
+def get_index_sharpe():
     return "Sharpe"
 
 
 @mod_sharpe.route('/create', methods=['GET', 'POST'])
-def create_portfolio():
+def create_portfolio_sharpe():
     stock_string_list = request.args.get("stocks")
     try:
         stock_list = eval(stock_string_list)
