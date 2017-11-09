@@ -122,11 +122,3 @@ class Markowitz(object):
             "annual-return": 360*desc[0].item(),
             "annual-volatility": np.sqrt(360)*desc[-1].item()
         }
-
-
-with Markowitz() as marks:
-    result = marks.get_efficient_portfolio(tickers=["ALSEA", "GRUMAB", "BIMBOA"], percentile=10)
-result
-
-
-marks
