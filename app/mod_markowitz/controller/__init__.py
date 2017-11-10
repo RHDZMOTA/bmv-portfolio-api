@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from app import db
 
 from util.markowitz_procedure import Markowitz
@@ -32,7 +32,7 @@ def create_portfolio_markowitz():
         with Markowitz() as mark:
             result = mark.get_efficient_portfolio(tickers=stock_list, percentile=percentile)
     except:
-        return json.dumps({"Error": "Markowitz procedure couldn't be performed."})
+        return jsonify({"Error": "Markowitz procedure couldn't be performed."})
 
-    return json.dumps(result)
+    return jsonify(result)
 
