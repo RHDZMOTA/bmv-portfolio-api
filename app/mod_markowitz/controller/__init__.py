@@ -19,6 +19,7 @@ def get_index_markowitz():
 def create_portfolio_markowitz():
     stock_string_list = request.args.get("stocks")
     percentile = request.args.get("percentile")
+    not_string = request.args.get("not_string")
     try:
         stock_list = eval(stock_string_list)
         percentile = float(percentile)
@@ -34,5 +35,25 @@ def create_portfolio_markowitz():
     except:
         return jsonify({"Error": "Markowitz procedure couldn't be performed."})
 
-    return jsonify(result)
+    def create_string_result(resp):
+        ans = """
+            **Markowitz Portfolio**
+
+            - *Percentile*: {p}
+            - *Annual return*: {annual_return}
+            - *Annual volatility*: {annual_volatility}
+            """.format(
+            p=str(resp["frontier-percentile"]),
+            annual_return=str(resp["annual-return"]),
+            annual_volatility=str(resp["annual-volatility"])
+        ).replace('            ', "")
+        for key in resp:
+            if key in ["frontier-percentile", "annual-return", "annual-volatility", "daily-return", "daily-volatility"]:
+                continue
+            ans += "\n- *{key}*: {val}".format(key=key, val=resp[key])
+        return ans
+
+    if not_string:
+        return jsonify(result)
+    return create_string_result(result)
 
