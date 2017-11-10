@@ -113,12 +113,15 @@ class Markowitz(object):
         desc = self.port_opt.iloc[[select]]
         desc = desc.T.values
         weights = pd.DataFrame(100 * self.w_opt_list[select], columns=self.returns.columns, index=[select])
-        return {
+        w_list = weights.values.tolist()[0]
+        s_list = list(weights.columns.values)
+        result = {
             "frontier-percentile": percentile,
-            "weights": weights.values.tolist()[0],
-            "stocks": list(weights.columns.values),
             "daily-return": desc[0].item(),
             "daily-volatility": desc[-1].item(),
             "annual-return": 360*desc[0].item(),
             "annual-volatility": np.sqrt(360)*desc[-1].item()
         }
+        for s, w in zip(s_list, w_list):
+            result[s] = w
+        return result
