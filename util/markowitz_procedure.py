@@ -116,12 +116,12 @@ class Markowitz(object):
         w_list = weights.values.tolist()[0]
         s_list = list(weights.columns.values)
         result = {
-            "frontier-percentile": percentile,
-            "daily-return": desc[0].item(),
-            "daily-volatility": desc[-1].item(),
-            "annual-return": 360*desc[0].item(),
-            "annual-volatility": np.sqrt(360)*desc[-1].item()
+            "frontier-percentile": str(percentile),
+            "daily-return": str(desc[0].item()),
+            "daily-volatility": str(desc[-1].item()),
+            "annual-return": str(360*desc[0].item()),
+            "annual-volatility": str(np.sqrt(360)*desc[-1].item())
         }
         for s, w in zip(s_list, w_list):
-            result[s] = w
+            result[s] = str(w)
         return result
